@@ -1,10 +1,10 @@
 import 'package:actual/common/const/data.dart';
 import 'package:actual/restaurant/model/restaurant_model.dart';
+import 'package:actual/restaurant/view/restaurant_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import '../component/restaurant_card.dart';
-
 
 class RestaurantScreen extends StatefulWidget {
   const RestaurantScreen({Key? key}) : super(key: key);
@@ -46,11 +46,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
         child: FutureBuilder<List>(
           future: paginateRestaurant(),
           builder: (context, AsyncSnapshot<List> snapshot) {
-            if(!snapshot.hasData){
-              return Container();
+            if(!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
             }
-
-            print(snapshot.data);
 
             return ListView.separated(
               shrinkWrap: true,
@@ -59,31 +57,17 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
               itemBuilder: (_, index) {
                 final item = snapshot.data![index];
 
-                final parsedItem = RestaurantModel(
-                  id: item['id'],
-                  name: item['name'],
-                  thumbUrl: 'http://${getIPByPlatform()}${item['thumbUrl']}',
-                  tags: List<String>.from(item['tags']),
-                  priceRange: RestaurantPriceRange.values.firstWhere((element) => element.name == item['priceRange']),
-                  ratingsCount: item['ratingsCount'],
-                  deliveryTime: item['deliveryTime'],
-                  deliveryFee: item['deliveryFee'],
-                  ratings: item['ratings'],
-                );
+                final parsedItem = RestaurantModel.fromJson(item);
 
-                return RestaurantCard(
-                  image: Image.network(
-                    parsedItem.thumbUrl,
-                    fit: BoxFit.cover,
+                return GestureDetector(
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => RestaurantDetailScreen(
+                        restaurantModel: parsedItem,
+                      ),
+                    ),
                   ),
-                  name: parsedItem.name,
-                  // Convert List<dynamic> To List<String>
-                  // List<T>.from(list) => Convert Type of list element To 'T'
-                  tags: parsedItem.tags,
-                  ratingsCount: parsedItem.ratingsCount,
-                  deliveryTime: parsedItem.deliveryTime,
-                  deliveryFee: parsedItem.deliveryFee,
-                  ratings: parsedItem.ratings,
+                  child: RestaurantCard(restaurant: parsedItem),
                 );
               },
             );

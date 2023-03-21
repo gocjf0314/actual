@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String requestUrl = 'http://${getIPByPlatform()}/auth/token';
 
     try{
-      final response = await dio.post(
+      Response? response = await dio.post(
         requestUrl,
         options: Options(
           headers: {
