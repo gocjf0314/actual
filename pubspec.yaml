@@ -19,10 +19,17 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
 
+  # Develop Management
   dev: ^1.0.0
-  dio: ^4.0.6
-  flutter_secure_storage: ^6.0.0
+
+  # Code Management
+  retrofit: '>=4.0.0 <5.0.0'
   json_annotation: ^4.8.0
+
+  # Function Service
+  dio: ^5.0.3
+  flutter_secure_storage: ^6.0.0
+  logger: any
 
 dev_dependencies:
   flutter_test:
@@ -34,13 +41,16 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  build_runner: ^2.3.3
+
+  # Description
+  retrofit_generator: '>=5.0.0 <6.0.0'
 
   # Some Packages Needed to using json_serializable
   # flutter pub add json_serializable --dev
   #   flutter pub add build_runner -- dev
   #   flutter pub add json_annotation
   json_serializable: ^6.6.1
+  build_runner: ^2.3.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
