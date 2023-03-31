@@ -26,10 +26,22 @@ part 'cursor_pagination_model.g.dart';
 ///   [A.g.dart]
 ///   json['variable_name'] as List<dynamic>).map([fromJsonT]).toList()
 
+abstract class CursorPaginationBase {}
+
+class CursorPaginationError extends CursorPaginationBase {
+  final String message;
+
+  CursorPaginationError({
+    required this.message,
+  });
+}
+
+class CursorPaginationLoad extends CursorPaginationBase {}
+
 @JsonSerializable(
   genericArgumentFactories: true,
 )
-class CursorPagination<T> {
+class CursorPagination<T> extends CursorPaginationBase {
   final CursorPaginationMeta meta;
   final List<T> data;
 
@@ -58,4 +70,20 @@ class CursorPaginationMeta {
   => _$CursorPaginationMetaFromJson(json);
 
   Map<String, dynamic> toJson() => _$CursorPaginationMetaToJson(this);
+}
+
+// 새로 고침
+class CursorPaginationReFetching<T> extends CursorPagination<T> {
+  CursorPaginationReFetching({
+    required super.meta,
+    required super.data,
+  });
+}
+
+// 추가로 데이터를 요청하는 중인 상태
+class CursorPaginationFetchingMore<T> extends CursorPagination<T> {
+  CursorPaginationFetchingMore({
+    required super.meta,
+    required super.data,
+  });
 }

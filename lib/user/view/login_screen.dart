@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:actual/common/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
@@ -10,15 +11,16 @@ import 'package:actual/common/const/colors.dart';
 import 'package:actual/common/const/data.dart';
 
 import 'package:actual/common/view/root_tab.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   // For Networking
   final Dio dio = Dio();
@@ -63,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
       String refreshToken = response.data['refreshToken'];
       String accessToken = response.data['accessToken'];
 
+      final secureStorage = ref.read(secureStorageProvider);
       await secureStorage.write(key: REFRESH_TOKEN_KEY, value: refreshToken);
       await secureStorage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
 
@@ -78,6 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future signUp() async{
+    final secureStorage = ref.read(secureStorageProvider);
     String? refreshToken = await secureStorage.read(key: REFRESH_TOKEN_KEY);
     if(refreshToken == null || refreshToken.isEmpty){
       print('Please request refreshToken');

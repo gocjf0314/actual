@@ -1,5 +1,7 @@
 import 'package:actual/common/const/data.dart';
+import 'package:actual/common/secure_storage/secure_storage.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// [Interceptor]
@@ -8,6 +10,19 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// 3) onError
 /// [Options]
 /// method: GET, POST, PATCH, DELETE, ...
+
+final dioProvider = Provider<Dio>((ref) {
+  final dio = Dio();
+  final secureStorage = ref.watch(secureStorageProvider);
+
+  dio.interceptors.add(
+    CustomInterceptor(
+      secureStorage: secureStorage,
+    ),
+  );
+
+  return dio;
+});
 
 class CustomInterceptor extends Interceptor{
   final FlutterSecureStorage secureStorage;

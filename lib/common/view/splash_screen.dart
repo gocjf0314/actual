@@ -1,3 +1,4 @@
+import 'package:actual/common/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
@@ -6,16 +7,17 @@ import 'package:actual/common/const/colors.dart';
 import 'package:actual/common/const/data.dart';
 import 'package:actual/common/view/root_tab.dart';
 import 'package:actual/user/view/login_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   bool existToken = false;
 
@@ -27,6 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void checkExistToken() async{
     final Dio dio = Dio();
+    final secureStorage = ref.read(secureStorageProvider);
 
     final refreshToken = await secureStorage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await secureStorage.read(key: ACCESS_TOKEN_KEY);

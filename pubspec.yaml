@@ -19,6 +19,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
 
+  flutter_riverpod: ^2.3.2
+  riverpod_annotation: ^2.0.2
   # Develop Management
   dev: ^1.0.0
 
@@ -44,6 +46,7 @@ dev_dependencies:
 
   # Description
   retrofit_generator: '>=5.0.0 <6.0.0'
+  riverpod_generator: ^2.1.4
 
   # Some Packages Needed to using json_serializable
   # flutter pub add json_serializable --dev
