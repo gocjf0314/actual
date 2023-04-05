@@ -54,22 +54,39 @@ class CursorPagination<T> extends CursorPaginationBase {
     Map<String, dynamic> json,
     T Function(Object? object) fromJsonT,
   ) => _$CursorPaginationFromJson(json, fromJsonT);
+
+  CursorPagination copyWith({
+    CursorPaginationMeta? meta,
+    List<T>? data,
+  }) {
+    return CursorPagination(
+      meta: meta ?? this.meta,
+      data: data ?? this.data,
+    );
+  }
 }
 
 @JsonSerializable()
 class CursorPaginationMeta {
   final int count;
-  final bool? moreHas;
+  final bool hasMore;
 
   CursorPaginationMeta({
     required this.count,
-    required this.moreHas,
+    required this.hasMore,
   });
 
   factory CursorPaginationMeta.fromJson(Map<String, dynamic> json)
   => _$CursorPaginationMetaFromJson(json);
 
   Map<String, dynamic> toJson() => _$CursorPaginationMetaToJson(this);
+
+  CursorPaginationMeta copyWith({int? count, bool? hasMore}) {
+    return CursorPaginationMeta(
+      count: count ?? this.count,
+      hasMore: hasMore ?? this.hasMore,
+    );
+  }
 }
 
 // 새로 고침

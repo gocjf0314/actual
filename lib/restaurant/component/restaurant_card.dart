@@ -1,4 +1,5 @@
 import 'package:actual/common/const/colors.dart';
+import 'package:actual/restaurant/model/restaurant_detail_model.dart';
 import 'package:flutter/material.dart';
 
 import '../model/restaurant_model.dart';
@@ -7,31 +8,45 @@ class RestaurantCard extends StatelessWidget {
   final RestaurantModel restaurant;
   final bool isDetail;
   final String? detail;
+  final String? heroKey;
 
-  RestaurantCard({
+  const RestaurantCard({
     required this.restaurant,
+    this.heroKey,
     this.isDetail = false,
     this.detail,
     Key? key,
   }) : super(key: key);
 
-  // factory RestaurantCard.fromModel(RestaurantModel model) {
-  //   return RestaurantCard(restaurant: model);
-  // }
+  factory RestaurantCard.fromModel({
+    required RestaurantModel model,
+    bool? isDetail = false,
+    String? detail,
+  }) => RestaurantCard(
+    restaurant: model,
+    isDetail: isDetail!,
+    detail: model is RestaurantDetailModel ? model.detail : null,
+    heroKey: model.id,
+  );
 
-  Widget get image => Image.network(
-        restaurant.thumbUrl,
-        fit: BoxFit.cover,
-      );
+  Widget imageWidget() => ClipRRect(
+    borderRadius: BorderRadius.circular(isDetail ? 0.0 : 12.0),
+    child: Image.network(
+      restaurant.thumbUrl,
+      fit: BoxFit.cover,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        isDetail ? image : ClipRRect(
-          borderRadius: BorderRadius.circular(12.0),
-          child: image,
-        ),
+        if(heroKey != null)
+          Hero(
+            tag: ObjectKey(heroKey),
+            child: imageWidget(),
+          ),
+        if(heroKey == null) imageWidget(),
         const SizedBox(height: 16.0),
         Padding(
           padding: EdgeInsets.symmetric(
