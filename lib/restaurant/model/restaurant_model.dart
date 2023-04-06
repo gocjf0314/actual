@@ -1,3 +1,4 @@
+import 'package:actual/common/model/model_with_id.dart';
 import 'package:actual/common/utils/data_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -26,8 +27,10 @@ enum RestaurantPriceRange {
 /// json['key'] 처럼 변수 하나 하나를 하드코딩으로 작성해 주어야 하는 불편함이 있다.
 /// 이를 자동화 하기 위해 [JsonSerializable]을 사용
 @JsonSerializable()
-class RestaurantModel {
+class RestaurantModel implements IModelWithId{
+  @override
   final String id;
+
   final String name;
 
   /// Data return type is T

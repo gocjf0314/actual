@@ -1,4 +1,5 @@
 import 'package:actual/common/model/cursor_pagination_model.dart';
+import 'package:actual/common/utils/pgination_utils.dart';
 import 'package:actual/restaurant/provider/restaurant_provider.dart';
 import 'package:actual/restaurant/view/restaurant_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +23,12 @@ class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
     scrollController.addListener(scrollListener);
   }
 
-  void scrollListener() {
-    // 현재 위치가 끝 부분에 다다르기 직전이면 데이터 추가 요청
-    if(scrollController.offset > scrollController.position.maxScrollExtent - 300) {
-      ref.read(restaurantProvider.notifier).paginate(fetchMore: true);
-    }
-  }
+  void scrollListener() => PaginationUtils.paginate(
+        scrollController: scrollController,
+        paginationProvider: ref.read(
+          restaurantProvider.notifier,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
