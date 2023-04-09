@@ -122,7 +122,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
     );
   }
 
-  renderProducts({required List<ProductModel> products}) {
+  renderProducts({required List<RestaurantProductModel> products}) {
     return SliverPadding(
       padding: const EdgeInsets.all(16.0),
       sliver: SliverList(
@@ -131,7 +131,9 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
           (context, index) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
-              child: ProductCard(product: products[index]),
+              child: ProductCard.fromRestaurantProductModel(
+                model: products[index],
+              ),
             );
           },
         ),

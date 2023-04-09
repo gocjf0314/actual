@@ -1,14 +1,23 @@
 import 'package:actual/common/const/colors.dart';
+import 'package:actual/product/model/product_model.dart';
 import 'package:actual/restaurant/model/restaurant_detail_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  final ProductModel product;
+  final RestaurantProductModel product;
 
   const ProductCard({
     required this.product,
     Key? key,
   }) : super(key: key);
+
+  factory ProductCard.fromProductModel({
+    required ProductModel model,
+  }) => ProductCard(product: model);
+
+  factory ProductCard.fromRestaurantProductModel({
+    required RestaurantProductModel model,
+  }) => ProductCard(product: model);
 
   final double _imageWidth = 110;
   final double _imageHeight = 110;
@@ -35,10 +44,7 @@ class ProductCard extends StatelessWidget {
               children: [
                 Text(
                   product.name,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500
-                  ),
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                 ),
                 Text(
                   product.detail.toString(),
@@ -54,10 +60,9 @@ class ProductCard extends StatelessWidget {
                   '₩${product.price}',
                   textAlign: TextAlign.right,
                   style: TextStyle(
-                    color: PRIMARY_COLOR,
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w500
-                  ),
+                      color: PRIMARY_COLOR,
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w500),
                 ),
               ],
             ),

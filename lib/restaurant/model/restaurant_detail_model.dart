@@ -6,11 +6,10 @@ part 'restaurant_detail_model.g.dart';
 
 @JsonSerializable()
 class RestaurantDetailModel extends RestaurantModel {
-
   final String detail;
 
   @JsonKey(toJson: productsToJson)
-  final List<ProductModel> products;
+  final List<RestaurantProductModel> products;
 
   RestaurantDetailModel({
     required super.id,
@@ -33,14 +32,13 @@ class RestaurantDetailModel extends RestaurantModel {
   @override
   Map<String, dynamic> toJson() => _$RestaurantDetailModelToJson(this);
 
-  static productsToJson(List<ProductModel> products) {
+  static productsToJson(List<RestaurantProductModel> products) {
     return products.map((e) => e.toJson()).toList();
   }
 }
 
 @JsonSerializable()
-class ProductModel {
-
+class RestaurantProductModel {
   final String id;
   final String name;
   final String detail;
@@ -49,7 +47,7 @@ class ProductModel {
   final String imgUrl;
   final int price;
 
-  ProductModel({
+  RestaurantProductModel({
     required this.id,
     required this.name,
     required this.detail,
@@ -57,8 +55,8 @@ class ProductModel {
     required this.price,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json)
-  => _$ProductModelFromJson(json);
+  factory RestaurantProductModel.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantProductModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ProductModelToJson(this);
+  Map<String, dynamic> toJson() => _$RestaurantProductModelToJson(this);
 }
