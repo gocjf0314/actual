@@ -112,6 +112,7 @@ class RestaurantCard extends StatelessWidget {
       ],
     );
   }
+
   
   Widget renderDot() {
     return const Padding(

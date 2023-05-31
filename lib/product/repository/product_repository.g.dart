@@ -20,7 +20,7 @@ class _ProductRepository<T> implements ProductRepository<T> {
 
   @override
   Future<CursorPagination<ProductModel>> paginate(
-      {params = const PaginationParams()}) async {
+      {PaginationParams? params = const PaginationParams()}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);

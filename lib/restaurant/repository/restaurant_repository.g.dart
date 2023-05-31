@@ -20,7 +20,7 @@ class _RestaurantRepository implements RestaurantRepository {
 
   @override
   Future<CursorPagination<RestaurantModel>> paginate(
-      {params = const PaginationParams()}) async {
+      {PaginationParams? params = const PaginationParams()}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(params?.toJson() ?? <String, dynamic>{});
@@ -49,7 +49,8 @@ class _RestaurantRepository implements RestaurantRepository {
   }
 
   @override
-  Future<RestaurantDetailModel> getRestaurantDetail({required id}) async {
+  Future<RestaurantDetailModel> getRestaurantDetail(
+      {required String id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
